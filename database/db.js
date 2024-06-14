@@ -5,13 +5,10 @@ const sequelize = new Sequelize({
     storage: 'database/database.sqlite'
 })
 
-// const Aluno = require('../models/Aluno')
-// const ItemLanchonete = require('../models/ItemLanchonete')
-// const Transacao = require('../models/Transacao')
 
-
-
-// Transacao.belongsTo(Aluno, {foreignKey: 'id_aluno'})
-// Transacao.belongsTo(ItemLanchonete, {foreignKey: 'id_item_lanchonete'})
+// const ItemLanchonete = require('.ItemLanchonete./models/ItemLanchonete')
+// const Aluno = require('..Aluno/models/Aluno')
+// const Transacao = require('..Transacao/models/Transacao')
+// const User = require('..User/models/User')
 
 module.exports = sequelize

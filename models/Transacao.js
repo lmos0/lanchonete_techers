@@ -5,7 +5,7 @@ const Aluno = require('./Aluno')
 const ItemLanchonete = require('./ItemLanchonete')
 
 
-const Transacao = sequelize.define('Transacaos',{
+const Transacao = sequelize.define('Transacao',{
     id:{
         type: DataTypes.INTEGER,
         primaryKey: true,

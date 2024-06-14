@@ -25,11 +25,17 @@ const loginUser = async (req, res) => {
         if(!isPasswordCorrect){
             return res.status(401).json({error: 'Senha incorreta'})
         }
-        return res.status(200).json({message: 'Usuário logado com sucesso'})
+        //res.render('telalogin.ejs')
+       //return res.status(200).json({message: 'Usuário logado com sucesso'})
+       return res.redirect('/adminpanel')
         
     } catch (error) {
         res.status(500).json({error: error.message})
     }
 }
 
-module.exports = {createUser, loginUser}
+const renderLogin = (req, res) => {
+    res.render('telalogin.ejs')
+}
+
+module.exports = {createUser, loginUser, renderLogin}
