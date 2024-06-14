@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router()
+const {check} = require('express-validator')
 
 const {createUser, loginUser, renderLogin} = require('../controllers/userController')
 const {createAluno, atualizarSaldo, deletarAluno} = require('../controllers/alunoController')
@@ -15,7 +16,11 @@ router.get('/adminpanel', (req, res) => {
     res.render('adminpainel.ejs')
 })
 
-router.post('/cadastrar', createUser)
+router.get('/cadastrar', (req, res) => {
+    res.render('telacadastro.ejs')
+})
+
+router.post('/cadastrar', check('email').isEmail(), createUser)
 router.post('/login', loginUser)
 router.post('/lanchonete', createItemLanchonete)
 router.post('/aluno', createAluno)

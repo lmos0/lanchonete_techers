@@ -1,10 +1,15 @@
 const express = require('express')
+//const {validationResult} = require('express-validator')
+
 const User = require('../models/User')
 const bcrypt = require('bcrypt')
 
 const createUser = async (req, res) => {
-    const {nome, email, senha} = req.body
+    const {nome, email, senha, confirmarSenha} = req.body
     try {
+        if(req.body.senha !== confirmarSenha){
+            return res.status(400).json({error: 'Senhas não conferem'})
+        }
         const senha =  await bcrypt.hash(req.body.senha, 10)
         const user = await User.create({nome, email, senha})
         res.status(201).json(user)
