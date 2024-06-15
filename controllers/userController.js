@@ -32,6 +32,7 @@ const loginUser = async (req, res) => {
         }
         //res.render('telalogin.ejs')
        //return res.status(200).json({message: 'Usuário logado com sucesso'})
+        req.session.user = user
        return res.redirect('/adminpanel')
         
     } catch (error) {
@@ -42,5 +43,7 @@ const loginUser = async (req, res) => {
 const renderLogin = (req, res) => {
     res.render('telalogin.ejs')
 }
+
+
 
 module.exports = {createUser, loginUser, renderLogin}

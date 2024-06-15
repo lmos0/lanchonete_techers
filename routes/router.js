@@ -6,13 +6,15 @@ const {createUser, loginUser, renderLogin} = require('../controllers/userControl
 const {createAluno, atualizarSaldo, deletarAluno} = require('../controllers/alunoController')
 const {createItemLanchonete, compraItemLanchonete, deletarItemLanchonete, atualizarItemLanchonete} = require('../controllers/lanchoneteController')
 
+const {protectroute} = require('../middleware/usermiddleware')
+
 router.get('/', (req, res) => {
     res.send('Hello World!')
 })
 
 router.get('/login', renderLogin)
 
-router.get('/adminpanel', (req, res) => {
+router.get('/adminpanel', protectroute, (req, res) => {
     res.render('adminpainel.ejs')
 })
 
