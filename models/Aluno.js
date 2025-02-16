@@ -1,23 +1,31 @@
-const {Datatypes, Sequelize} = require('sequelize')
+const {DataTypes, Sequelize} = require('sequelize')
 const sequelize = require('../database/db')
 
 const Transacao = require('./Transacao')
 
 const Aluno = sequelize.define('Aluno',{
     id:{
-        type: Sequelize.INTEGER,
+        type: DataTypes.INTEGER,
         primaryKey: true,
-        autoIncrement: true
+        autoIncrement: true,
+        validate:{
+            notEmpty: true,
+            len:[2,100]
+        }
     },
     nome:{
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
         allowNull: false
     },
     saldo:{
-        type: Sequelize.FLOAT,
+        type: DataTypes.FLOAT,
         allowNull: false,
         defaultValue: 0
 
+    },
+    responsavel:{
+        type: DataTypes.STRING,
+        allowNull: false
     }
 })
 
