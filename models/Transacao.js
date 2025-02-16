@@ -15,7 +15,7 @@ const Transacao = sequelize.define('Transacao',{
         type: DataTypes.INTEGER,
         allowNull: false,
         references:{
-            model: Aluno,
+            model: 'Alunos',
             key: 'id'
         }
     },
@@ -23,7 +23,7 @@ const Transacao = sequelize.define('Transacao',{
         type: DataTypes.INTEGER,
         allowNull: false,
         references:{
-            model: ItemLanchonete,
+            model: 'ItemLanchonetes',
             key: 'id'
         }
     },
@@ -38,7 +38,6 @@ const Transacao = sequelize.define('Transacao',{
     }
 })
 
-// Transacao.belongsTo(Aluno, {foreignKey: 'id_aluno'})
-// Transacao.belongsTo(ItemLanchonete, {foreignKey: 'id_item_lanchonete'})
+
 
 module.exports = Transacao

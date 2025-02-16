@@ -21,7 +21,4 @@ const Aluno = sequelize.define('Aluno',{
     }
 })
 
-Aluno.hasMany(Transacao, {foreignKey: 'id_aluno'})
-Transacao.belongsTo(Aluno, {foreignKey: 'id_aluno'})
-
 module.exports = Aluno

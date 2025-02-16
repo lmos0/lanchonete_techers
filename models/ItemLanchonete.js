@@ -14,7 +14,10 @@ const ItemLanchonete = sequelize.define('ItemLanchonete', {
     preco: {
         type: DataTypes.FLOAT,
         allowNull: false
-    }
+    },
+    
+}, {
+    tableName: 'ItemLanchonetes' // Nome da tabela no banco de dados
 });
 
 

@@ -24,14 +24,14 @@ router.get('/cadastrar', (req, res) => {
 
 router.post('/cadastrar', check('email').isEmail(), createUser)
 router.post('/login', loginUser)
-router.post('/lanchonete', createItemLanchonete)
+router.post('/item', createItemLanchonete)
 router.post('/aluno', createAluno)
 router.post('/venda', compraItemLanchonete)
 
 router.put('/aluno', atualizarSaldo)
-router.put('/lanchonete', atualizarItemLanchonete)
+router.put('/item', atualizarItemLanchonete)
 
-router.delete('/lanchonete', deletarItemLanchonete)
+router.delete('/item', deletarItemLanchonete)
 router.delete('/aluno', deletarAluno)
 
 module.exports = router
