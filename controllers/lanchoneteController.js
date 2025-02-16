@@ -5,6 +5,27 @@ const Transacao = require('../models/Transacao')
 const createItemLanchonete = async (req, res) => {
     const {nome,preco} = req.body
     try {
+        if(!nome || !preco){
+            return res.status(400).json({error: 'Nome e preço são obrigatórios'})
+        }
+
+        if(typeof nome !== 'string' || typeof preco !== 'number'){
+            return res.status(400).json({error: 'Nome deve ser uma string e preço um número'})
+        }
+
+        if(preco <= 0){
+            return res.status(400).json({error: 'Preço deve ser um número positivo'})
+        }
+
+        const trimmedNome = nome.trim().toLocaleLowerCase()
+        const roundedPreco = Math.round(preco * 100) / 100 //arredonda para 2 casas decimais
+
+        const itemExists = await ItemLanchonete.findOne({where: {nome: trimmedNome}})
+
+        if (itemExists){
+            return res.status(409).json({error: 'Item já existe'})
+        }
+
         const itemLanchonete = await ItemLanchonete.create({nome,preco})
         res.status(201).json(itemLanchonete)
     } catch (error) {

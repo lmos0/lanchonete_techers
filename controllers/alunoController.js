@@ -1,9 +1,10 @@
 const Aluno = require('../models/Aluno')
 
 const createAluno = async (req, res) => {
-    const {nome,saldo, responsavel} = req.body
+   
     try {
 
+        const {nome, saldo, responsavel} = req.body
         //input validation
 
         if (!nome || typeof nome !== 'string') {
@@ -79,4 +80,4 @@ const deletarAluno = async (req, res) => {
     }
 }
 
-module.exports = {createAluno, updateSaldo, deletarAluno}
+module.exports = {createAluno, updateSaldo, deletarAluno, updateAluno}
