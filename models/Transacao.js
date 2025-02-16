@@ -36,7 +36,7 @@ const Transacao = sequelize.define('Transacao',{
         type: DataTypes.FLOAT,
         allowNull: false,
     }
-})
+}, {timestamps: true, tableName: 'Transacoes'})
 
 
 
