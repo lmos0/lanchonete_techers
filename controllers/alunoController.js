@@ -3,8 +3,30 @@ const Aluno = require('../models/Aluno')
 const createAluno = async (req, res) => {
     const {nome,saldo} = req.body
     try {
+
+        //input validation
+
+        if (!nome || typeof nome !== 'string') {
+            return res.status(400).json({error: 'Nome obrigatório e deve ser uma string'})
+        }
+
+        if (saldo === undefined || typeof saldo !== 'number' || saldo < 0 ) {
+            return res.status(400).json({error: 'Saldo obrigatório e deve ser um número positivo'})
+        }
+
+        // sanitize input
+        const nome = nome.trim()
+        const saldo = saldo !== undefined ? parseFloat(saldo) : undefined
+
+        // check if aluno already exists
+
+        const alunoExists = await Aluno.findOne({where: {nome}})
+        if(alunoExists){
+            return res.status(400).json({error: 'Aluno já existe'})
+        }
+
         const aluno = await Aluno.create({nome,saldo})
-        res.status(201).json(aluno)
+        return res.status(201).json(aluno)
     } catch (error) {
         res.status(500).json({error: error.message})
     }
