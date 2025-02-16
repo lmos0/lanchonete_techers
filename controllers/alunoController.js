@@ -1,13 +1,17 @@
 const Aluno = require('../models/Aluno')
 
 const createAluno = async (req, res) => {
-    const {nome,saldo} = req.body
+    const {nome,saldo, responsavel} = req.body
     try {
 
         //input validation
 
         if (!nome || typeof nome !== 'string') {
             return res.status(400).json({error: 'Nome obrigatório e deve ser uma string'})
+        }
+
+        if (!responsavel || typeof nome !== 'string') {
+            return res.status(400).json({error: 'Campo responsável obrigatório e deve ser uma string'})
         }
 
         if (saldo === undefined || typeof saldo !== 'number' || saldo < 0 ) {
@@ -25,14 +29,31 @@ const createAluno = async (req, res) => {
             return res.status(400).json({error: 'Aluno já existe'})
         }
 
-        const aluno = await Aluno.create({nome,saldo})
+        const aluno = await Aluno.create({nome,saldo, responsavel})
         return res.status(201).json(aluno)
     } catch (error) {
         res.status(500).json({error: error.message})
     }
 }
 
-const atualizarSaldo = async (req,res) => {
+const updateAluno = async (req, res) => {
+    const {id, nome, responsavel} = req.body
+    try {
+        const aluno = await Aluno.findByPk(id)
+        if(!aluno){
+            return res.status(404).json({error: 'Aluno não encontrado'})
+        }
+        aluno.nome = nome
+        aluno.responsavel = responsavel
+        await aluno.save()
+        res.status(200).json(aluno)
+    } catch (error) {
+        res.status(500).json({error: error.message})
+    }
+
+}
+
+const updateSaldo = async (req,res) => {
     const {id, saldo} = req.body
     try {
         const aluno = await Aluno.findByPk(id)
@@ -58,4 +79,4 @@ const deletarAluno = async (req, res) => {
     }
 }
 
-module.exports = {createAluno, atualizarSaldo, deletarAluno}
+module.exports = {createAluno, updateSaldo, deletarAluno}
