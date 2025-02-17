@@ -3,8 +3,8 @@ const Aluno = require('../models/Aluno')
 const createAluno = async (req, res) => {
    
     try {
-
         const {nome, saldo, responsavel} = req.body
+
         //input validation
 
         if (!nome || typeof nome !== 'string') {
@@ -20,8 +20,9 @@ const createAluno = async (req, res) => {
         }
 
         // sanitize input
-        const nome = nome.trim()
-        const saldo = saldo !== undefined ? parseFloat(saldo) : undefined
+        const trimmedNome = nome.trim()
+        const parsedSaldo = saldo !== undefined ? parseFloat(saldo) : undefined
+        
 
         // check if aluno already exists
 
@@ -30,7 +31,7 @@ const createAluno = async (req, res) => {
             return res.status(400).json({error: 'Aluno já existe'})
         }
 
-        const aluno = await Aluno.create({nome,saldo, responsavel})
+        const aluno = await Aluno.create({nome, saldo, responsavel})
         return res.status(201).json(aluno)
     } catch (error) {
         res.status(500).json({error: error.message})
@@ -80,4 +81,13 @@ const deletarAluno = async (req, res) => {
     }
 }
 
-module.exports = {createAluno, updateSaldo, deletarAluno, updateAluno}
+const mostrarTodosAlunos = async (req, res) => {
+    try {
+        const alunos = await Aluno.findAll()
+        res.status(200).json(alunos)
+    } catch (error) {
+        res.status(500).json({error: error.message})
+    }
+}
+
+module.exports = {createAluno, updateSaldo, deletarAluno, updateAluno, mostrarTodosAlunos}
