@@ -44,6 +44,15 @@ const renderLogin = (req, res) => {
     res.render('telalogin.ejs')
 }
 
+const showUsers = async (req, res) => {
+    try {
+        const users = await User.findAll()
+        res.status(200).json(users)
+    } catch (error) {
+        res.status(500).json({error: error.message})
+    }
+}
 
 
-module.exports = {createUser, loginUser, renderLogin}
+
+module.exports = {createUser, loginUser, renderLogin, showUsers}

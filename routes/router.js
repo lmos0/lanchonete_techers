@@ -4,7 +4,7 @@ const {check} = require('express-validator')
 
 const {createUser, loginUser, renderLogin} = require('../controllers/userController')
 const {createAluno, updateSaldo, deletarAluno, mostrarTodosAlunos} = require('../controllers/alunoController')
-const {createItemLanchonete, compraItemLanchonete, deletarItemLanchonete, atualizarItemLanchonete, mostrarTodasTransacoes} = require('../controllers/lanchoneteController')
+const {createItemLanchonete, compraItemLanchonete, deletarItemLanchonete, atualizarItemLanchonete, mostrarTodasTransacoes, mostrarTodosItensLanchonete} = require('../controllers/lanchoneteController')
 
 const {protectroute} = require('../middleware/usermiddleware')
 
@@ -25,6 +25,7 @@ router.get('/cadastrar', (req, res) => {
 router.get('/alunos', mostrarTodosAlunos)
 
 router.get('/vendas', mostrarTodasTransacoes)
+router.get('/itens', mostrarTodosItensLanchonete)
 
 router.post('/cadastrar', check('email').isEmail(), createUser)
 router.post('/login', loginUser)
