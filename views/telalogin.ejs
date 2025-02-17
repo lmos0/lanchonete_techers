@@ -4,19 +4,180 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Lanchonete</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Form Container */
+        .login-container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #343a40;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        /* Form Styles */
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        label {
+            font-weight: 600;
+            color: #495057;
+            text-align: left;
+        }
+
+        input {
+            padding: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus {
+            border-color: #28a745;
+            outline: none;
+        }
+
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        /* Error Message Styles */
+        .error-message {
+            color: #dc3545;
+            font-size: 12px;
+            margin-top: 5px;
+            text-align: left;
+            display: none;
+        }
+
+        /* Link Styles */
+        .register-link {
+            margin-top: 15px;
+            font-size: 14px;
+            color: #6c757d;
+        }
+
+        .register-link a {
+            color: #28a745;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .register-link a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 20px;
+            }
+
+            input {
+                padding: 8px;
+            }
+
+            button {
+                padding: 10px;
+                font-size: 14px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <form action="" method="post">
+    <%- include('partials/navbar') %>
+    <div class="login-container">
+        <h1>Login Lanchonete</h1>
+        <% if (locals.error) { %>
+            <div class="error-message" style="display: block;">
+                <%= error %>
+            </div>
+        <% } %>
+        <form action="/usuarios/login" method="post" onsubmit="return validateForm()">
+            <label for="email">Email:</label>
+            <input type="email" name="email" id="email" placeholder="Digite seu email" required>
+            <div id="emailError" class="error-message"></div>
 
-        <label for="email">Email</label>
-        <input type="email" name="email" id="email">
+            <label for="senha">Senha:</label>
+            <input type="password" name="senha" id="senha" placeholder="Digite sua senha" required>
+            <div id="senhaError" class="error-message"></div>
 
-        <label for="senha">Senha</label>
-        <input type="password" name="senha" id="senha">
+            <button type="submit">Entrar</button>
+        </form>
+        <div class="register-link">
+            Não tem uma conta? <a href="/usuarios/registro">Registre-se</a>
+        </div>
+    </div>
 
-        <button type="submit">Entrar</button>
+    <script>
+        function validateForm() {
+            let isValid = true;
+            const email = document.getElementById('email').value.trim();
+            const senha = document.getElementById('senha').value.trim();
 
+            // Reset error messages
+            document.getElementById('emailError').style.display = 'none';
+            document.getElementById('senhaError').style.display = 'none';
 
-    </form>
+            // Validate email
+            if (!email) {
+                document.getElementById('emailError').textContent = 'Email é obrigatório';
+                document.getElementById('emailError').style.display = 'block';
+                isValid = false;
+            } else if (!/\S+@\S+\.\S+/.test(email)) {
+                document.getElementById('emailError').textContent = 'Email inválido';
+                document.getElementById('emailError').style.display = 'block';
+                isValid = false;
+            }
+
+            // Validate senha
+            if (!senha) {
+                document.getElementById('senhaError').textContent = 'Senha é obrigatória';
+                document.getElementById('senhaError').style.display = 'block';
+                isValid = false;
+            }
+
+            return isValid;
+        }
+    </script>
 </body>
 </html>

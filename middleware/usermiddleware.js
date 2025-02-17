@@ -2,7 +2,7 @@ const express = require('express')
 const session = require('express-session')
 const app = express()
 
-const protectroute = (req, res, next) => {
+const protectRoute = (req, res, next) => {
     if(req.session.user){
         next()
     }else{
@@ -10,4 +10,4 @@ const protectroute = (req, res, next) => {
     }
 }
 
-module.exports = {protectroute}
+module.exports = {protectRoute}

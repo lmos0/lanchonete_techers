@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Cadastro de Alunos</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Navbar Styles */
+        nav {
+            width: 100%;
+            background-color: #343a40;
+            color: white;
+            padding: 10px 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+        nav ul li {
+            margin-right: 20px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #28a745;
+        }
+
+        /* Container Styles */
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 450px;
+            margin-top: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #343a40;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        /* Form Styles */
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        label {
+            font-weight: 600;
+            color: #495057;
+        }
+
+        input {
+            padding: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus {
+            border-color: #28a745;
+            outline: none;
+        }
+
+        .error {
+            color: #dc3545;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 480px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 20px;
+            }
+
+            input {
+                padding: 8px;
+            }
+
+            button {
+                padding: 10px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <%- include('partials/navbar') %>
+
+    <div class="container">
+        <h1>Cadastro de Alunos</h1>
+        <form action="/alunos" method="post">
+            <label for="nome">Nome do Aluno:</label>
+            <input type="text" name="nome" id="nome" placeholder="Digite o nome" required>
+            <span class="error" id="nomeError"></span>
+
+            <label for="responsavel">Nome do Responsável:</label>
+            <input type="text" name="responsavel" id="responsavel" placeholder="Digite o nome do responsável" required>
+            <span class="error" id="responsavelError"></span>
+
+            <label for="saldo">Saldo Inicial:</label>
+            <input type="number" name="saldo" id="saldo" placeholder="Digite o saldo inicial" min="0" required>
+            <span class="error" id="saldoError"></span>
+
+            <button type="submit">Cadastrar</button>
+        </form>
+    </div>
+
+    <script>
+        // Optional: Add form validation logic here
+        document.querySelector('form').addEventListener('submit', function (e) {
+            let isValid = true;
+
+            // Validate nome
+            const nome = document.getElementById('nome').value.trim();
+            if (!nome) {
+                document.getElementById('nomeError').textContent = 'Nome é obrigatório';
+                document.getElementById('nomeError').style.display = 'block';
+                isValid = false;
+            } else {
+                document.getElementById('nomeError').style.display = 'none';
+            }
+
+            // Validate responsavel
+            const responsavel = document.getElementById('responsavel').value.trim();
+            if (!responsavel) {
+                document.getElementById('responsavelError').textContent = 'Nome do responsável é obrigatório';
+                document.getElementById('responsavelError').style.display = 'block';
+                isValid = false;
+            } else {
+                document.getElementById('responsavelError').style.display = 'none';
+            }
+
+            // Validate saldo
+            const saldo = parseFloat(document.getElementById('saldo').value);
+            if (isNaN(saldo)) {
+                document.getElementById('saldoError').textContent = 'Saldo deve ser um número válido';
+                document.getElementById('saldoError').style.display = 'block';
+                isValid = false;
+            } else if (saldo < 0) {
+                document.getElementById('saldoError').textContent = 'Saldo não pode ser negativo';
+                document.getElementById('saldoError').style.display = 'block';
+                isValid = false;
+            } else {
+                document.getElementById('saldoError').style.display = 'none';
+            }
+
+            if (!isValid) {
+                e.preventDefault(); // Prevent form submission if validation fails
+            }
+        
+        });
+    </script>
+</body>
+</html>

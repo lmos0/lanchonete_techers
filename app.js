@@ -17,7 +17,7 @@ app.use(session({ secret: process.env.SECRET, resave: false, saveUninitialized: 
 app.set('view engine', 'ejs');
 
 app.use('/', router);
-app.use('/user', adminRouter);
+app.use('/admin', adminRouter);
 
 app.listen(process.env.PORT, () => {
     console.log(`Server is running on http://localhost:${process.env.PORT}`);

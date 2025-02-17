@@ -1,0 +1,48 @@
+<nav>
+    <ul>
+        <li><a href="/">Início</a></li>
+        <li><a href="/login">Login</a></li>
+        <li><a href="/admin">Admin</a></li>
+        
+        <li><a href="/alunos">Alunos</a></li>
+        <li><a href="/alunos/registro">Registrar Aluno</a></li>
+
+        <li><a href="/lanchonete/itens">Itens da Lanchonete</a></li>
+        <li><a href="/lanchonete/itens/novo">Adicionar Item</a></li>
+        <li><a href="/lanchonete/transacoes">Transações</a></li>
+        <li><a href="/lanchonete/compras/novo">Nova Compra</a></li>
+    </ul>
+</nav>
+
+<style>
+   nav {
+        background-color: #333;
+        padding: 10px 20px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
+    }
+    ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+    }
+    li {
+        display: inline;
+    }
+    a {
+        color: white;
+        text-decoration: none;
+        font-size: 16px;
+        padding: 10px 15px;
+        border-radius: 5px;
+    }
+    a:hover {
+        background-color: #555;
+    }
+</style>

@@ -1,42 +1,50 @@
-const express = require('express')
-const router = express.Router()
-const {check} = require('express-validator')
+const express = require('express');
+const { check } = require('express-validator');
+const router = express.Router();
 
-const {createUser, loginUser, renderLogin} = require('../controllers/userController')
-const {createAluno, updateSaldo, deletarAluno, mostrarTodosAlunos} = require('../controllers/alunoController')
-const {createItemLanchonete, compraItemLanchonete, deletarItemLanchonete, atualizarItemLanchonete, mostrarTodasTransacoes, mostrarTodosItensLanchonete} = require('../controllers/lanchoneteController')
+// Controllers
+const { createUser, loginUser, renderLogin } = require('../controllers/userController');
+const { createAluno, updateSaldoAluno, deleteAluno, getAllAlunos } = require('../controllers/alunoController');
+const {
+    createLanchoneteItem,
+    purchaseLanchoneteItem,
+    deleteLanchoneteItem,
+    updateLanchoneteItem,
+    getAllTransactions,
+    getAllLanchoneteItems,
+    renderCompraPage
+} = require('../controllers/lanchoneteController');
 
-const {protectroute} = require('../middleware/usermiddleware')
+// Middleware
+const { protectRoute } = require('../middleware/usermiddleware');
 
-router.get('/', (req, res) => {
-    res.send('Hello World!')
-})
+// Main Routes
+router.get('/', (req, res) => res.send('Hello World!'));
+router.get('/login', renderLogin);
+router.get('/admin', protectRoute, (req, res) => res.render('adminpainel.ejs'));
 
-router.get('/login', renderLogin)
+// Aluno Routes
+router.get('/alunos', getAllAlunos);
+router.get('/alunos/registro', (req, res) => res.render('cadastro_alunos.ejs'));
+router.post('/alunos', createAluno);
+router.put('/alunos/:id/saldo', updateSaldoAluno);
+router.delete('/alunos/:id', deleteAluno);
 
-router.get('/adminpanel', protectroute, (req, res) => {
-    res.render('adminpainel.ejs')
-})
+// Lanchonete Routes
+router.get('/lanchonete/transacoes', getAllTransactions);
+router.get('/lanchonete/itens', getAllLanchoneteItems);
+router.get('/lanchonete/itens/novo', (req, res) => res.render('additem.ejs'));
+router.post('/lanchonete/itens', createLanchoneteItem);
+router.post('/lanchonete/compras', purchaseLanchoneteItem);
+router.put('/lanchonete/itens/:id', updateLanchoneteItem);
+router.delete('/lanchonete/itens/:id', deleteLanchoneteItem);
+router.get('/lanchonete/compras/novo', renderCompraPage);
 
-router.get('/cadastrar', (req, res) => {
-    res.render('telacadastro.ejs')
-})
+// User Routes
+router.post('/usuarios', check('email').isEmail(), createUser);
+router.post('/usuarios/login', loginUser);
 
-router.get('/alunos', mostrarTodosAlunos)
+//compras
 
-router.get('/vendas', mostrarTodasTransacoes)
-router.get('/itens', mostrarTodosItensLanchonete)
 
-router.post('/cadastrar', check('email').isEmail(), createUser)
-router.post('/login', loginUser)
-router.post('/item', createItemLanchonete)
-router.post('/aluno', createAluno)
-router.post('/venda', compraItemLanchonete)
-
-router.put('/aluno', updateSaldo)
-router.put('/item', atualizarItemLanchonete)
-
-router.delete('/item', deletarItemLanchonete)
-router.delete('/aluno', deletarAluno)
-
-module.exports = router
+module.exports = router;
